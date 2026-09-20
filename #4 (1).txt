@@ -1,0 +1,160 @@
+Started by user Dharani
+ > git rev-parse --resolve-git-dir /var/lib/jenkins/caches/git-6ade76606eed7461b91b0e5f5ea847c9/.git # timeout=10
+Setting origin to https://github.com/dharanimuthukumar-sketch/React-Project
+ > git config remote.origin.url https://github.com/dharanimuthukumar-sketch/React-Project # timeout=10
+Fetching origin...
+Fetching upstream changes from origin
+ > git --version # timeout=10
+ > git --version # 'git version 2.53.0'
+ > git config --get remote.origin.url # timeout=10
+ > git fetch --no-tags --force --progress -- origin +refs/heads/*:refs/remotes/origin/* # timeout=10
+Seen branch in repository origin/dev
+Seen branch in repository origin/main
+Seen 2 remote branches
+Obtained Jenkinsfile from a761c26ba5303b621f9edf1d9f3ee91de812715c
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/lib/jenkins/workspace/react-deployment-pipeline_dev
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/lib/jenkins/workspace/react-deployment-pipeline_dev/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/dharanimuthukumar-sketch/React-Project # timeout=10
+Fetching without tags
+Fetching upstream changes from https://github.com/dharanimuthukumar-sketch/React-Project
+ > git --version # timeout=10
+ > git --version # 'git version 2.53.0'
+ > git fetch --no-tags --force --progress -- https://github.com/dharanimuthukumar-sketch/React-Project +refs/heads/*:refs/remotes/origin/* # timeout=10
+Checking out Revision a761c26ba5303b621f9edf1d9f3ee91de812715c (dev)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f a761c26ba5303b621f9edf1d9f3ee91de812715c # timeout=10
+Commit message: "fix: simplify dockerfile to serve pre-compiled build folder"
+ > git rev-list --no-walk a761c26ba5303b621f9edf1d9f3ee91de812715c # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] withCredentials
+Masking supported pattern matches of $DOCKER_CREDS or $DOCKER_CREDS_PSW
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Checkout Code)
+[Pipeline] checkout
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/lib/jenkins/workspace/react-deployment-pipeline_dev/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/dharanimuthukumar-sketch/React-Project # timeout=10
+Fetching without tags
+Fetching upstream changes from https://github.com/dharanimuthukumar-sketch/React-Project
+ > git --version # timeout=10
+ > git --version # 'git version 2.53.0'
+ > git fetch --no-tags --force --progress -- https://github.com/dharanimuthukumar-sketch/React-Project +refs/heads/*:refs/remotes/origin/* # timeout=10
+Checking out Revision a761c26ba5303b621f9edf1d9f3ee91de812715c (dev)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f a761c26ba5303b621f9edf1d9f3ee91de812715c # timeout=10
+Commit message: "fix: simplify dockerfile to serve pre-compiled build folder"
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build Docker Image)
+[Pipeline] sh
++ docker build -t namodharani/devops-build-dev:4 -t namodharani/devops-build-prod:4 .
+DEPRECATED: The legacy builder is deprecated and will be removed in a future release.
+            Install the buildx component to build images with BuildKit:
+            https://docs.docker.com/go/buildx/
+
+Sending build context to Docker daemon  3.624MB
+Step 1/4 : FROM nginx:alpine
+ ---> 62ff2089abf5
+Step 2/4 : COPY build/ /usr/share/nginx/html
+ ---> Using cache
+ ---> d65d2c2ea699
+Step 3/4 : EXPOSE 80
+ ---> Using cache
+ ---> 9977a88c2c1a
+Step 4/4 : CMD ["nginx", "-g", "daemon off;"]
+ ---> Using cache
+ ---> e201ef6faf07
+Successfully built e201ef6faf07
+Successfully tagged namodharani/devops-build-dev:4
+Successfully tagged namodharani/devops-build-prod:4
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Docker Hub Routing & Push)
+[Pipeline] sh
++ echo ****
++ docker login -u namodharani --password-stdin
+
+WARNING! Your credentials are stored unencrypted in '/var/lib/jenkins/.docker/config.json'.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/go/credential-store/
+
+Login Succeeded
+[Pipeline] script
+[Pipeline] {
+[Pipeline] echo
+🌿 Branch 'dev' matched: Uploading to Public Development Repository...
+[Pipeline] sh
++ docker push namodharani/devops-build-dev:4
+The push refers to repository [docker.io/namodharani/devops-build-dev]
+fb08ee61b60d: Waiting
+ce3e77cbba4d: Waiting
+873bdb7a78a1: Waiting
+90de1d15efe2: Waiting
+cb2f2cc9a341: Waiting
+e2de96513ba9: Waiting
+9820ac717ea9: Waiting
+f408df9a891a: Waiting
+c0ac6b3b9c77: Waiting
+fb08ee61b60d: Waiting
+ce3e77cbba4d: Waiting
+873bdb7a78a1: Waiting
+90de1d15efe2: Waiting
+cb2f2cc9a341: Waiting
+e2de96513ba9: Waiting
+9820ac717ea9: Waiting
+f408df9a891a: Waiting
+c0ac6b3b9c77: Waiting
+e2de96513ba9: Mounted from library/nginx
+f408df9a891a: Mounted from library/nginx
+c0ac6b3b9c77: Mounted from library/nginx
+fb08ee61b60d: Mounted from library/nginx
+ce3e77cbba4d: Waiting
+873bdb7a78a1: Mounted from library/nginx
+90de1d15efe2: Waiting
+cb2f2cc9a341: Mounted from library/nginx
+90de1d15efe2: Mounted from library/nginx
+ce3e77cbba4d: Mounted from library/nginx
+9820ac717ea9: Pushed
+4: digest: sha256:e201ef6faf079a3146b93bdc51d941adf9a4a9240d643a2e562cf9cc6a5116a7 size: 2264
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Declarative: Post Actions)
+[Pipeline] sh
++ docker logout
+Removing login credentials for https://index.docker.io/v1/
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // withCredentials
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
